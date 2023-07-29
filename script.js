@@ -8,7 +8,7 @@ $(document).ready(function() {
     var topRow = $('#topRow');
 
     // Connect to the WebSocket server
-    const socket = io.connect('http://localhost:5001');
+    const socket = io.connect('http://34.125.243.146:5001');
 
     // Function to initialize the game state
     function initializeGameState(gameStateUpdate) {
