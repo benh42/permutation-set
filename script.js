@@ -5,10 +5,12 @@ $(document).ready(function() {
     var N = null;
     var K = null;
 
+    var score = 0;
+
     var topRow = $('#topRow');
 
     // Connect to the WebSocket server
-    const socket = io.connect('http://34.125.243.146:5001');
+    const socket = io.connect('http://34.125.224.212:5001')  // 'http://34.125.243.146:5001');
 
     // Function to initialize the game state
     function initializeGameState(gameStateUpdate) {
@@ -39,6 +41,10 @@ $(document).ready(function() {
         $selectedCard.on('transitionend', () => {
             $selectedCard.remove();
         });
+
+        if (selectedCardIndices.has(card_index)) {
+            selectedCardIndices.delete(card_index);
+        }
     }
 
     // Function to replace selected cards with new random cards
@@ -111,14 +117,19 @@ $(document).ready(function() {
     }
 
     function handleCorrectSubset(gameStateUpdate) {
-
-        selectedCardIndices.forEach(index => {
+        gameStateUpdate.subset.forEach(index => {
             removeCard(index);
         });
-        for (let index = N - selectedCardIndices.size; index < N; index++) {
+        for (let index = N - gameStateUpdate.subset.length; index < N; index++) {
             appendCard(gameStateUpdate.game_state.cards[index]);
         }
-        selectedCardIndices.clear();
+        score++;
+        updateScoreDisplay();
+    }
+
+    function updateScoreDisplay() {
+        score_box = $('#score');
+        score_box.text('Score: ' + score);
     }
 
     // Listen for game_state event from the server
@@ -138,6 +149,8 @@ $(document).ready(function() {
 
     // Click event listener for the cards
     $(document).on('click', ".card", handleCardClick);
+
+    updateScoreDisplay();
 
     // $('#topRow').on('click', handleCardClick);
 });
