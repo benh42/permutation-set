@@ -132,7 +132,7 @@ $(document).ready(function() {
     }
 
     function handleCorrectSubset(gameStateUpdate) {
-        if (gameStateUpdate.subset === selectedCardIndices) {
+        if (compareHands(selectedCardIndices, gameStateUpdate.subset)) {
             score++;
         }
         gameStateUpdate.subset.forEach(index => {
