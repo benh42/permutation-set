@@ -117,13 +117,15 @@ $(document).ready(function() {
     }
 
     function handleCorrectSubset(gameStateUpdate) {
+        if (gameStateUpdate.subset === selectedCardIndices) {
+            score++;
+        }
         gameStateUpdate.subset.forEach(index => {
             removeCard(index);
         });
         for (let index = N - gameStateUpdate.subset.length; index < N; index++) {
             appendCard(gameStateUpdate.game_state.cards[index]);
         }
-        score++;
         updateScoreDisplay();
     }
 
