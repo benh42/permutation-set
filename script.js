@@ -116,6 +116,21 @@ $(document).ready(function() {
         }
     }
 
+    function compareHands(set, array) {
+        if (set.size !== array.length) {
+            return false;
+        }
+
+        // Compare the two Sets to check if they have the same elements
+        for (const element of array) {
+            if (!set.has(element)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     function handleCorrectSubset(gameStateUpdate) {
         if (gameStateUpdate.subset === selectedCardIndices) {
             score++;
